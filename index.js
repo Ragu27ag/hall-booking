@@ -16,6 +16,6 @@ app.post('/room',(req,res) =>{
 
 
 
-// app.listen(port,() =>{
-//     comnsole.log(`http://$`)
-// })
+app.listen(port,() =>{
+    comnsole.log(`http://$`)
+})
