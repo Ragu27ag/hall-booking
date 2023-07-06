@@ -1,6 +1,6 @@
 import express from  'express';
 
-import { createRoom, cusDetails, readBook, readRoom, roomBooking, roomDetails } from './crud.js';
+import { countCus, createRoom, cusDetails, readBook, readRoom, roomBooking, roomDetails } from './crud.js';
 
 
 const app = express();
@@ -40,6 +40,11 @@ app.get('/room/cusdetails',(req,res) => {
    res.send(cusDetails())
 })
 
+app.get('/room/:name',(req,res) => {
+   const {name} = req.params
+   res.send(countCus(name))
+
+})
 
 
 app.listen(port,() =>{

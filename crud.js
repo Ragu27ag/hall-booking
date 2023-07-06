@@ -13,6 +13,13 @@ let room = [{
     amenities: ["swimming pool", "AC", "restaurent"],
     Pricehr: "10000",
     roomid: "3",
+    status: "notbooked"
+},
+{
+    seats: "50",
+    amenities: ["swimming pool", "AC", "restaurent"],
+    Pricehr: "10000",
+    roomid: "2",
     status: "booked"
 }
 ]
@@ -21,14 +28,30 @@ let book = [{
     date: "06.07.2023",
     starttime: "12:00PM",
     endtime: "12:00PM",
-    roomid: "1"
+    roomid: "1",
+    bookingid:'1',
+    bookingdate:'05.07.2023',
+    bookingstatus:'confirmed'
 },
 {
-    custname: "AGR",
-    date: "06.07.2023",
+    custname: "Ragu",
+    date: "24.07.2023",
     starttime: "12:00PM",
     endtime: "12:00PM",
-    roomid: "4"
+    roomid: "2",
+    bookingid:'2',
+    bookingdate:'05.07.2023',
+    bookingstatus:'confirmed'
+},
+{
+    custname: "Ragu",
+    date: "25.07.2023",
+    starttime: "3:00PM",
+    endtime: "12:00PM",
+    roomid: "2",
+    bookingid:'7',
+    bookingdate:'05.07.2023',
+    bookingstatus:'not-confirmed'
 }]
 
 
@@ -50,10 +73,10 @@ const roomBooking = (bookRoom) => {
 
 const roomDetails = () => {
     var d = {}
-
-    var a = []
+    var finaldata = []
+    var roomdata = []
     for (var i = 0; i < room.length; i++) {
-        a[i] = book.map((obj) => {
+        roomdata[i] = book.map((obj) => {
 
             if (obj.roomid === room[i].roomid) {
 
@@ -75,26 +98,35 @@ const roomDetails = () => {
         })
 
     }
+    for(var k = 0; k < roomdata.length;k++){
+        for(var j = 0 ; j < roomdata[k].length;j++){
+            if(roomdata[k][j] !== undefined){
+                finaldata.push(roomdata[k][j])
+            }
+        }
+      
+    }
+
+   
 
 
-
-    return (JSON.stringify(a))
+    return (JSON.stringify(finaldata))
 
 }
 
 const cusDetails = () => {
     var e = {}
-
-    var f = []
+    var cusfinaldata = []
+    var cusdata = []
     for (var i = 0; i < room.length; i++) {
-        f[i] = book.map((obj) => {
+        cusdata[i] = book.map((obj) => {
 
             if (obj.roomid === room[i].roomid) {
 
                 return (
                     e = {
                         'id': room[i].roomid,
-                        
+
                         'name': obj.custname,
                         'date': obj.date,
                         'starttime': obj.starttime,
@@ -108,14 +140,63 @@ const cusDetails = () => {
 
         })
 
+
+    }
+
+    for(var k = 0; k < cusdata.length;k++){
+        for(var j = 0 ; j < cusdata[k].length;j++){
+            if(cusdata[k][j] !== undefined){
+                cusfinaldata.push(cusdata[k][j])
+            }
+        }
+      
     }
 
 
 
-    return (JSON.stringify(f))
 
+    return (JSON.stringify(cusfinaldata))
+
+}
+
+const countCus = (name) => {
+        const count = book.filter(({custname}) => custname === name);
+        
+        return ({...count ,count : count.length})
 }
 
 
 
-export { createRoom, readRoom, roomBooking, readBook, roomDetails,cusDetails }
+export { createRoom, readRoom, roomBooking, readBook, roomDetails, cusDetails,countCus }
+
+
+
+
+// [
+//     [
+//         {
+//             "id": "1",
+//             "status": "booked",
+//             "name": "AGR",
+//             "date": "06.07.2023",
+//             "starttime": "12:00PM",
+//             "endtime": "12:00PM"
+//         },
+//         null
+//     ],
+//     [
+//         null,
+//         null
+//     ],
+//     [
+//         null,
+//         {
+//             "id": "2",
+//             "status": "booked",
+//             "name": "Ragu",
+//             "date": "06.07.2023",
+//             "starttime": "12:00PM",
+//             "endtime": "12:00PM"
+//         }
+//     ]
+// ]
